@@ -1,0 +1,1295 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Alfaship — Inspección Autónoma con Drones para Buques de Carga
+    </title>
+    <meta
+      name="description"
+      content="Tecnología de drones autónomos para inspección de carga, detección de daños y análisis de cubiertas en buques de carga. Reducción del 80% en tiempo de inspección."
+    />
+    <meta
+      property="og:title"
+      content="Alfaship — Inspección Autónoma con Drones"
+    />
+    <meta
+      property="og:description"
+      content="Revolucionamos la inspección marítima con drones autónomos e inteligencia artificial."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta
+      name="twitter:title"
+      content="Alfaship — Inspección Autónoma con Drones"
+    />
+    <meta
+      name="twitter:description"
+      content="Revolucionamos la inspección marítima con drones autónomos e inteligencia artificial."
+    />
+    <link rel="icon" href="./logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ===== CSS VARIABLES & RESET ===== */
+      :root {
+        --primary: #0a2540;
+        --primary-light: #1a3f6f;
+        --primary-medium: #0f3460;
+        --accent: #0080ff;
+        --accent-light: #39f;
+        --accent-glow: #0080ff26;
+        --bg-dark: #050e1a;
+        --bg-section: #f7f9fc;
+        --bg-white: #fff;
+        --text-white: #fff;
+        --text-light: #c0d0e0;
+        --text-dark: #0a2540;
+        --text-muted: #5a6a7a;
+        --border-light: #ffffff14;
+        --border-dark: #e2e8f0;
+        --shadow-sm: 0 1px 3px #0000000f;
+        --shadow-md: 0 4px 20px #00000014;
+        --shadow-lg: 0 10px 40px #0000001f;
+        --radius-sm: 8px;
+        --radius-md: 12px;
+        --radius-lg: 20px;
+        --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      *,
+      :before,
+      :after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html {
+        scroll-behavior: smooth;
+        font-size: 16px;
+      }
+      body {
+        color: var(--text-dark);
+        background: var(--bg-white);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        font-family:
+          Inter,
+          -apple-system,
+          BlinkMacSystemFont,
+          Segoe UI,
+          sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+      img,
+      video {
+        max-width: 100%;
+        display: block;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      ul,
+      ol {
+        list-style: none;
+      }
+      button {
+        cursor: pointer;
+        background: 0 0;
+        border: none;
+        font-family: inherit;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+      }
+      .section-padding {
+        padding: 100px 0;
+      }
+      .section-header {
+        text-align: center;
+        margin-bottom: 64px;
+      }
+      .section-label {
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 16px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: inline-block;
+      }
+      .section-title {
+        color: var(--text-dark);
+        margin-bottom: 16px;
+        font-size: clamp(2rem, 4vw, 2.75rem);
+        font-weight: 800;
+        line-height: 1.2;
+      }
+      .section-title--light {
+        color: var(--text-white);
+      }
+      .section-subtitle {
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 0 auto;
+        font-size: 1.1rem;
+        line-height: 1.7;
+      }
+      .section-subtitle--light {
+        color: var(--text-light);
+      }
+      .btn {
+        transition: var(--transition);
+        letter-spacing: 0.3px;
+        border-radius: 50px;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 32px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        display: inline-flex;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: var(--text-white);
+        box-shadow: 0 4px 15px #0080ff4d;
+      }
+      .btn-primary:hover {
+        background: var(--accent-light);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 25px #0080ff66;
+      }
+      .btn-outline {
+        color: var(--text-white);
+        backdrop-filter: blur(4px);
+        border: 2px solid #ffffff4d;
+      }
+      .btn-outline:hover {
+        border-color: var(--text-white);
+        background: #ffffff1a;
+        transform: translateY(-2px);
+      }
+      @keyframes fadeInUp {
+        0% {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* ===== NAVBAR ===== */
+      .navbar {
+        z-index: 1000;
+        transition: var(--transition);
+        padding: 20px 0;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+      .navbar.scrolled {
+        backdrop-filter: blur(20px);
+        background: #0a2540f2;
+        padding: 12px 0;
+        box-shadow: 0 4px 30px #00000026;
+      }
+      .nav-content {
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 24px;
+        display: flex;
+      }
+      .nav-logo {
+        filter: brightness(0) invert();
+        width: auto;
+        height: 108px;
+        transition: var(--transition);
+      }
+      .nav-logo:hover {
+        opacity: 0.8;
+      }
+      .nav-links {
+        align-items: center;
+        gap: 36px;
+        display: flex;
+      }
+      .nav-link {
+        color: #fffc;
+        transition: var(--transition);
+        font-size: 0.9rem;
+        font-weight: 500;
+        position: relative;
+      }
+      .nav-link:after {
+        content: "";
+        background: var(--accent);
+        width: 0;
+        height: 2px;
+        transition: var(--transition);
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+      }
+      .nav-link:hover {
+        color: var(--text-white);
+      }
+      .nav-link:hover:after {
+        width: 100%;
+      }
+      .menu-toggle {
+        cursor: pointer;
+        flex-direction: column;
+        gap: 5px;
+        display: none;
+      }
+      .menu-toggle span {
+        background: var(--text-white);
+        width: 24px;
+        height: 2px;
+        transition: var(--transition);
+      }
+      @media (max-width: 768px) {
+        .menu-toggle {
+          display: flex;
+        }
+        .nav-links {
+          backdrop-filter: blur(20px);
+          text-align: center;
+          background: #0a2540fa;
+          flex-direction: column;
+          gap: 24px;
+          padding: 32px 24px;
+          display: none;
+          position: absolute;
+          top: 60px;
+          left: 0;
+          right: 0;
+        }
+        .nav-links.open {
+          display: flex;
+        }
+      }
+
+      /* ===== HERO ===== */
+      .hero {
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        display: flex;
+        position: relative;
+        overflow: hidden;
+      }
+      .video-bg {
+        z-index: 0;
+        position: absolute;
+        inset: 0;
+      }
+      .video-bg video {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+      .hero-overlay {
+        z-index: 1;
+        background: linear-gradient(
+          #050e1ab3 0%,
+          #0a2540d9 50%,
+          #050e1af2 100%
+        );
+        position: absolute;
+        inset: 0;
+      }
+      .hero-content {
+        z-index: 2;
+        text-align: center;
+        max-width: 800px;
+        padding: 0 24px;
+        position: relative;
+      }
+      .hero-badge {
+        color: var(--accent-light);
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        background: #0080ff1f;
+        border: 1px solid #0080ff40;
+        border-radius: 50px;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 28px;
+        padding: 8px 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        animation: 0.7s ease-out fadeInUp;
+        display: inline-flex;
+      }
+      .hero-title {
+        color: #fff;
+        letter-spacing: -2px;
+        margin-bottom: 28px;
+        font-size: clamp(3.5rem, 10vw, 7rem);
+        font-weight: 900;
+        line-height: 1;
+      }
+      .hero-subtitle {
+        color: #ffffffbf;
+        opacity: 0;
+        max-width: 620px;
+        margin-bottom: 40px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: clamp(1rem, 2vw, 1.25rem);
+        line-height: 1.8;
+        animation: 0.7s ease-out 0.3s forwards fadeInUp;
+      }
+      .hero-actions {
+        opacity: 0;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        animation: 0.7s ease-out 0.45s forwards fadeInUp;
+        display: flex;
+      }
+      .scroll-indicator {
+        z-index: 2;
+        color: #fff6;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        opacity: 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.75rem;
+        animation: 1s ease-out 1s forwards fadeIn;
+        display: flex;
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translate(-50%);
+      }
+      .scroll-line {
+        background: linear-gradient(#fff6, #0000);
+        width: 1px;
+        height: 40px;
+        animation: 2s ease-in-out infinite pulse;
+      }
+      @keyframes pulse {
+        0%,
+        to {
+          opacity: 0.4;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      @media (max-width: 768px) {
+        .hero {
+          min-height: 90vh;
+        }
+        .hero-actions {
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      /* ===== SERVICES ===== */
+      .services {
+        background: var(--bg-white);
+        position: relative;
+      }
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px;
+        display: grid;
+      }
+      .service-card {
+        background: var(--bg-white);
+        border: 1px solid var(--border-dark);
+        border-radius: var(--radius-md);
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+      .service-card:before {
+        content: "";
+        background: linear-gradient(90deg, var(--accent), var(--accent-light));
+        height: 3px;
+        transition: var(--transition);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        transform: scaleX(0);
+      }
+      .service-card:hover {
+        box-shadow: var(--shadow-lg);
+        border-color: #0000;
+      }
+      .service-card:hover:before {
+        transform: scaleX(1);
+      }
+      .card-toggle {
+        cursor: default;
+        text-align: left;
+        width: 100%;
+        color: inherit;
+        background: 0 0;
+        border: none;
+        justify-content: space-between;
+        align-items: center;
+        padding: 32px;
+        font-family: inherit;
+        display: flex;
+      }
+      .card-header {
+        align-items: center;
+        gap: 16px;
+        display: flex;
+      }
+      .card-number {
+        color: var(--accent);
+        opacity: 0.3;
+        font-size: 2rem;
+        font-weight: 900;
+        line-height: 1;
+      }
+      .card-title {
+        color: var(--text-dark);
+        margin: 0;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+      .card-body {
+        padding: 0 32px 32px;
+      }
+      .card-text {
+        color: var(--text-muted);
+        margin-bottom: 16px;
+        font-size: 0.95rem;
+        line-height: 1.7;
+      }
+      .card-stat {
+        background: var(--accent-glow);
+        color: var(--accent);
+        border-radius: 50px;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-flex;
+      }
+      @media (max-width: 768px) {
+        .services-grid {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+        .card-toggle {
+          padding: 24px 20px;
+        }
+        .card-body {
+          padding: 0 20px 24px;
+        }
+      }
+
+      /* ===== VIDEO BANNER ===== */
+      .video-banner {
+        justify-content: center;
+        align-items: center;
+        min-height: 60vh;
+        display: flex;
+        position: relative;
+        overflow: hidden;
+      }
+      .vb-bg {
+        z-index: 0;
+        position: absolute;
+        inset: 0;
+      }
+      .vb-bg video {
+        object-fit: cover;
+        width: 100%;
+        height: 100%;
+      }
+      .vb-overlay {
+        z-index: 1;
+        background: linear-gradient(
+          #050e1a99 0%,
+          #0a2540bf 50%,
+          #050e1ad9 100%
+        );
+        position: absolute;
+        inset: 0;
+      }
+      .vb-content {
+        z-index: 2;
+        text-align: center;
+        max-width: 780px;
+        padding: 60px 24px;
+        position: relative;
+      }
+      .vb-label {
+        color: #00c896;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        background: #00c8961f;
+        border: 1px solid #00c89640;
+        border-radius: 50px;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 24px;
+        padding: 8px 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        display: inline-flex;
+      }
+      .vb-title {
+        color: var(--text-white);
+        opacity: 0;
+        margin-bottom: 20px;
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 900;
+        line-height: 1.15;
+        animation: 0.7s ease-out 0.15s forwards fadeInUp;
+      }
+      .vb-accent {
+        background: linear-gradient(135deg, #00c896, #00e5ff);
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+      .vb-subtitle {
+        color: #ffffffbf;
+        opacity: 0;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+        font-size: clamp(0.95rem, 1.8vw, 1.15rem);
+        line-height: 1.8;
+        animation: 0.7s ease-out 0.3s forwards fadeInUp;
+      }
+      @media (max-width: 768px) {
+        .video-banner {
+          min-height: 50vh;
+        }
+        .vb-content {
+          padding: 40px 20px;
+        }
+      }
+
+      /* ===== ABOUT ===== */
+      .about {
+        background: var(--bg-section);
+      }
+      .about-wrapper {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 80px;
+        display: grid;
+      }
+      .about-label {
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 16px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        display: inline-block;
+      }
+      .about-title {
+        color: var(--text-dark);
+        margin-bottom: 20px;
+        font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+        font-weight: 800;
+        line-height: 1.2;
+      }
+      .about-text {
+        color: var(--text-muted);
+        margin-bottom: 16px;
+        font-size: 1rem;
+        line-height: 1.8;
+      }
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+        margin-top: 40px;
+        display: grid;
+      }
+      .stat-card {
+        background: var(--bg-white);
+        border-radius: var(--radius-sm);
+        border: 1px solid var(--border-dark);
+        transition: var(--transition);
+        padding: 24px;
+      }
+      .stat-card:hover {
+        box-shadow: var(--shadow-md);
+        transform: translateY(-2px);
+      }
+      .stat-number {
+        color: var(--accent);
+        margin-bottom: 6px;
+        font-size: 2rem;
+        font-weight: 900;
+        line-height: 1;
+      }
+      .stat-label {
+        color: var(--text-muted);
+        font-size: 0.85rem;
+        font-weight: 500;
+      }
+      .feature-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        display: grid;
+      }
+      .feature-card {
+        background: var(--primary);
+        border-radius: var(--radius-md);
+        color: var(--text-white);
+        transition: var(--transition);
+        padding: 28px 24px;
+      }
+      .feature-card:first-child {
+        background: linear-gradient(
+          135deg,
+          var(--primary),
+          var(--primary-medium)
+        );
+        grid-column: 1 / -1;
+      }
+      .feature-card:hover {
+        box-shadow: var(--shadow-lg);
+        transform: translateY(-2px);
+      }
+      .feature-title {
+        margin-bottom: 6px;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      .feature-text {
+        color: #ffffffb3;
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+      @media (max-width: 900px) {
+        .about-wrapper {
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+        .stats-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      @media (max-width: 480px) {
+        .stats-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ===== NICA VIEWER ===== */
+      .nica-viewer {
+        background: var(--bg-dark);
+        position: relative;
+        overflow: hidden;
+      }
+      .nica-viewer:before {
+        content: "";
+        pointer-events: none;
+        background: radial-gradient(circle, #0080ff0d 0%, #0000 70%);
+        width: 800px;
+        height: 800px;
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translate(-50%);
+      }
+      .viewer-area {
+        grid-template-columns: 1fr 280px;
+        align-items: start;
+        gap: 28px;
+        display: grid;
+      }
+      .iframe-wrapper {
+        aspect-ratio: 16/9;
+        border-radius: var(--radius-md);
+        border: 1px solid var(--border-light);
+        background: #000;
+        width: 100%;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 20px 80px #0006;
+      }
+      .viewer-iframe {
+        border: none;
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .activate-overlay {
+        z-index: 5;
+        backdrop-filter: blur(4px);
+        cursor: pointer;
+        background: #0000008c;
+        justify-content: center;
+        align-items: center;
+        transition: opacity 0.3s;
+        display: flex;
+        position: absolute;
+        inset: 0;
+      }
+      .activate-overlay:hover {
+        background: #0006;
+      }
+      .activate-content {
+        color: #ffffffe6;
+        text-align: center;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        padding: 0 24px;
+        font-size: 1rem;
+        font-weight: 600;
+        display: flex;
+      }
+      .activate-content svg {
+        opacity: 0.8;
+      }
+      .control-panel {
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-md);
+        background: #ffffff0a;
+        padding: 28px 24px;
+      }
+      .control-title {
+        color: var(--text-white);
+        letter-spacing: 0.5px;
+        margin-bottom: 24px;
+        font-size: 0.95rem;
+        font-weight: 700;
+      }
+      .control-group {
+        margin-bottom: 20px;
+      }
+      .control-label {
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        color: var(--accent);
+        margin-bottom: 8px;
+        font-size: 0.7rem;
+        font-weight: 700;
+      }
+      .control-row {
+        align-items: center;
+        gap: 12px;
+        display: flex;
+      }
+      .control-icon {
+        border-radius: var(--radius-sm);
+        width: 44px;
+        height: 44px;
+        color: var(--accent-light);
+        background: #0080ff1a;
+        border: 1px solid #0080ff33;
+        flex-shrink: 0;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+      .control-text {
+        color: #ffffffb3;
+        font-size: 0.85rem;
+        line-height: 1.4;
+      }
+      .control-divider {
+        background: var(--border-light);
+        height: 1px;
+        margin: 20px 0;
+      }
+      .control-hint {
+        color: #ffffff73;
+        align-items: flex-start;
+        gap: 10px;
+        font-size: 0.78rem;
+        line-height: 1.5;
+        display: flex;
+      }
+      .control-hint svg {
+        opacity: 0.5;
+        flex-shrink: 0;
+        margin-top: 1px;
+      }
+      @media (max-width: 900px) {
+        .viewer-area {
+          grid-template-columns: 1fr;
+        }
+        .iframe-wrapper {
+          aspect-ratio: 4/3;
+        }
+        .control-panel {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+          display: grid;
+        }
+        .control-title {
+          grid-column: 1 / -1;
+          margin-bottom: 8px;
+        }
+        .control-divider {
+          display: none;
+        }
+        .control-hint {
+          grid-column: 1 / -1;
+        }
+      }
+      @media (max-width: 480px) {
+        .control-panel {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* ===== FOOTER ===== */
+      .footer {
+        background: var(--bg-dark);
+        padding: 60px 0 30px;
+      }
+      .footer-content {
+        border-bottom: 1px solid var(--border-light);
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        padding-bottom: 30px;
+        display: flex;
+      }
+      .footer-logo {
+        filter: brightness(0) invert();
+        opacity: 0.7;
+        height: 30px;
+        transition: var(--transition);
+      }
+      .footer-logo:hover {
+        opacity: 1;
+      }
+      .footer-links {
+        gap: 32px;
+        display: flex;
+      }
+      .footer-link {
+        color: var(--text-light);
+        transition: var(--transition);
+        font-size: 0.9rem;
+      }
+      .footer-link:hover {
+        color: var(--text-white);
+      }
+      .footer-bottom {
+        color: #ffffff59;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.8rem;
+        display: flex;
+      }
+      @media (max-width: 768px) {
+        .footer-content {
+          text-align: center;
+          flex-direction: column;
+          gap: 24px;
+        }
+        .footer-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 20px;
+        }
+        .footer-bottom {
+          text-align: center;
+          flex-direction: column;
+          gap: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar" id="navbar">
+      <div class="nav-content">
+        <a href="#hero">
+          <img src="./logo.png" alt="Alfaship" class="nav-logo" />
+        </a>
+        <button
+          class="menu-toggle"
+          aria-label="Toggle menu"
+          onclick="
+            document.getElementById('nav-links').classList.toggle('open')
+          "
+        >
+          <span></span><span></span><span></span>
+        </button>
+        <div class="nav-links" id="nav-links">
+          <a href="#services" class="nav-link">Servicios</a>
+          <a href="#deck-inspection" class="nav-link">Tecnología</a>
+          <a href="#about" class="nav-link">Nosotros</a>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <!-- HERO -->
+      <section id="hero" class="hero">
+        <div class="video-bg">
+          <video autoplay muted loop playsinline>
+            <source src="./videos/Dron_carga_completo.mp4" type="video/mp4" />
+          </video>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <div class="hero-badge">Inspección Autónoma con Drones</div>
+          <h1 class="hero-title">3Drone</h1>
+          <p class="hero-subtitle">
+            Escaneo completo de la carga del buque mediante drones autónomos que
+            generan un modelo 3D con nuestra tecnología innovadora 3Drone.
+            Rastreamos cada contenedor para detectar daños.
+          </p>
+          <div class="hero-actions">
+            <a href="#services" class="btn btn-primary"
+              >Nuestras Soluciones →</a
+            >
+          </div>
+        </div>
+        <div class="scroll-indicator">
+          <span>Scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </section>
+
+      <!-- SERVICES -->
+      <section id="services" class="services section-padding">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-label">Soluciones</span>
+            <h2 class="section-title">Nuestro estándar 3Drone</h2>
+            <p class="section-subtitle">
+              Tecnología autónoma de drones que genera modelos 3D para la
+              inspección integral de buques de carga
+            </p>
+          </div>
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="card-toggle">
+                <div class="card-header">
+                  <span class="card-number">01</span>
+                  <h3 class="card-title">Escaneo 3D de Carga</h3>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Nuestros drones autónomos escanean la totalidad de la carga
+                  del buque y generan un modelo 3D de alta precisión. Mediante
+                  la tecnología 3Drone, rastreamos el estado de cada contenedor
+                  para detectar daños producidos en puerto o durante la
+                  travesía.
+                </p>
+                <span class="card-stat">80% más rápido</span>
+              </div>
+            </div>
+            <div class="service-card">
+              <div class="card-toggle">
+                <div class="card-header">
+                  <span class="card-number">02</span>
+                  <h3 class="card-title">Inspección de Cubierta</h3>
+                </div>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  Escaneamos la cubierta del buque antes y después de la
+                  limpieza, generando modelos 3D comparativos con tecnología
+                  3Drone. Se verifica de forma objetiva el estado de la
+                  superficie, detectando suciedad residual, corrosión o daños
+                  estructurales.
+                </p>
+                <span class="card-stat">90.2% precisión</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIDEO BANNER -->
+      <section id="deck-inspection" class="video-banner">
+        <div class="vb-bg">
+          <video autoplay muted loop playsinline>
+            <source
+              src="./videos/Dron_cubierta_completo.mp4"
+              type="video/mp4"
+            />
+          </video>
+        </div>
+        <div class="vb-overlay"></div>
+        <div class="vb-content">
+          <span class="vb-label">Solución 02 — Inspección de Cubierta</span>
+          <h2 class="vb-title">
+            Escaneo de la <span class="vb-accent">cubierta del buque</span>
+            antes y después de la limpieza
+          </h2>
+          <p class="vb-subtitle">
+            Generamos modelos 3D comparativos con tecnología 3Drone para
+            verificar objetivamente el estado de la superficie: suciedad
+            residual, corrosión y daños estructurales.
+          </p>
+        </div>
+      </section>
+
+      <!-- ABOUT -->
+      <section id="about" class="about section-padding">
+        <div class="container">
+          <div class="about-wrapper">
+            <div>
+              <span class="about-label">Sobre el Proyecto</span>
+              <h2 class="about-title">
+                Revolucionando la inspección marítima con tecnología autónoma
+              </h2>
+              <p class="about-text">
+                Nuestro sistema de drones autónomos transforma la manera en que
+                se realizan las inspecciones de carga y buques. Mediante la
+                generación de modelos 3D con tecnología 3Drone, eliminamos la
+                subjetividad, reducimos costes y proporcionamos datos más
+                precisos que cualquier método tradicional.
+              </p>
+              <p class="about-text">
+                Diseñado específicamente para operaciones marítimas de gran
+                escala, nuestro sistema se integra con los flujos de trabajo
+                existentes y genera valor desde el primer día de implementación.
+              </p>
+              <div class="stats-grid">
+                <div class="stat-card">
+                  <div class="stat-number">80%</div>
+                  <div class="stat-label">Reducción tiempo inspección</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">90.2%</div>
+                  <div class="stat-label">Precisión detección</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">0</div>
+                  <div class="stat-label">Riesgo para tripulación</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-number">24/7</div>
+                  <div class="stat-label">Disponibilidad operativa</div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <div class="feature-grid">
+                <div class="feature-card">
+                  <div class="feature-title">Tecnología 3Drone</div>
+                  <div class="feature-text">
+                    Modelos 3D generados a partir de escaneos autónomos que
+                    permiten análisis dimensional y comparativo con precisión
+                    milimétrica.
+                  </div>
+                </div>
+                <div class="feature-card">
+                  <div class="feature-title">Informes Automatizados</div>
+                  <div class="feature-text">
+                    Dashboards con datos procesados al instante y exportación
+                    automática de informes de inspección.
+                  </div>
+                </div>
+                <div class="feature-card">
+                  <div class="feature-title">Cumplimiento Normativo</div>
+                  <div class="feature-text">
+                    Conforme con regulaciones IMO y estándares internacionales
+                    de clasificación marítima.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NICA VIEWER -->
+      <section id="nica-viewer" class="nica-viewer section-padding">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-label">Tecnología 3Drone en Acción</span>
+            <h2 class="section-title section-title--light">
+              Explore el modelo 3D generado por nuestros drones
+            </h2>
+            <p class="section-subtitle section-subtitle--light">
+              Este entorno interactivo ha sido creado a partir de vídeo de dron
+              procesado con nuestra tecnología 3Drone. Navegue libremente por la
+              escena 3D para ver el nivel de detalle que capturamos en cada
+              inspección.
+            </p>
+          </div>
+          <div class="viewer-area">
+            <div class="iframe-wrapper">
+              <div
+                class="activate-overlay"
+                id="viewer-overlay"
+                onclick="this.style.display = 'none'"
+              >
+                <div class="activate-content">
+                  <svg
+                    width="48"
+                    height="48"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    <path d="M12 8v8M8 12h8"></path>
+                  </svg>
+                  <span>Haz clic para interactuar con el modelo 3D</span>
+                </div>
+              </div>
+              <iframe
+                src="https://dareplanetshuttle.github.io/NICA-WebViewer/"
+                title="NICA 3D WebViewer"
+                class="viewer-iframe"
+                allowfullscreen=""
+                loading="lazy"
+                tabindex="0"
+              ></iframe>
+            </div>
+            <div class="control-panel">
+              <h4 class="control-title">Controles de Navegación</h4>
+              <div class="control-group">
+                <div class="control-label">Rotar vista</div>
+                <div class="control-row">
+                  <div class="control-icon">
+                    <svg
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <rect x="3" y="3" width="7" height="12" rx="3.5"></rect>
+                      <path d="M6.5 8v2"></path>
+                    </svg>
+                  </div>
+                  <span class="control-text">Clic izquierdo + arrastrar</span>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="control-label">Mover / Desplazar</div>
+                <div class="control-row">
+                  <div class="control-icon">
+                    <svg
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <rect x="3" y="3" width="7" height="12" rx="3.5"></rect>
+                      <path d="M6.5 8v2"></path>
+                      <path d="M14 9h6M17 6l3 3-3 3"></path>
+                    </svg>
+                  </div>
+                  <span class="control-text">Clic derecho + arrastrar</span>
+                </div>
+              </div>
+              <div class="control-group">
+                <div class="control-label">Acercar / Alejar</div>
+                <div class="control-row">
+                  <div class="control-icon">
+                    <svg
+                      width="28"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                    >
+                      <rect x="3" y="3" width="7" height="12" rx="3.5"></rect>
+                      <path d="M6.5 6v2" stroke-width="2"></path>
+                      <path d="M14 7l3-3 3 3M14 11l3 3 3-3"></path>
+                    </svg>
+                  </div>
+                  <span class="control-text">Rueda del ratón</span>
+                </div>
+              </div>
+              <div class="control-divider"></div>
+              <div class="control-hint">
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="M12 16v-4M12 8h.01"></path>
+                </svg>
+                <span
+                  >Haz clic en el visor para activar los controles. Puedes
+                  arrastrar para explorar toda la escena en 360°.</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-content">
+          <a href="#hero">
+            <img src="./logo.png" alt="Alfaship" class="footer-logo" />
+          </a>
+          <div class="footer-links">
+            <a href="#services" class="footer-link">Servicios</a>
+            <a href="#deck-inspection" class="footer-link">Tecnología</a>
+            <a href="#about" class="footer-link">Nosotros</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>codegenia</span>
+          <span>Inspección Autónoma con Drones</span>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Navbar scroll effect
+      window.addEventListener("scroll", function () {
+        document
+          .getElementById("navbar")
+          .classList.toggle("scrolled", window.scrollY > 50);
+      });
+    </script>
+  </body>
+</html>
