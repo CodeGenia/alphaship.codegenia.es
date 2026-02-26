@@ -872,6 +872,135 @@
         }
       }
 
+      /* ===== CONTACT ===== */
+      .contact {
+        background: var(--bg-dark);
+        position: relative;
+        overflow: hidden;
+      }
+      .contact:before {
+        content: "";
+        pointer-events: none;
+        background: radial-gradient(circle, #0080ff0d 0%, #0000 70%);
+        width: 700px;
+        height: 700px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(30%, -30%);
+      }
+      .contact-wrapper {
+        display: flex;
+        justify-content: center;
+      }
+      .contact-wrapper--centered .contact-info {
+        text-align: center;
+        max-width: 600px;
+      }
+      .contact-info {
+        padding-top: 8px;
+      }
+      .contact-actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 8px;
+      }
+      .contact-logo-link {
+        display: inline-block;
+        margin-bottom: 28px;
+      }
+      .contact-logo {
+        height: 60px;
+        width: auto;
+        filter: brightness(0) invert();
+        opacity: 0.9;
+        transition: var(--transition);
+      }
+      .contact-logo:hover {
+        opacity: 1;
+      }
+      .contact-title {
+        color: var(--text-white);
+        font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+        font-weight: 800;
+        line-height: 1.2;
+        margin-bottom: 16px;
+      }
+      .contact-desc {
+        color: var(--text-light);
+        font-size: 1rem;
+        line-height: 1.8;
+        margin-bottom: 32px;
+        max-width: 560px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .contact-web {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--accent-light);
+        font-weight: 600;
+        font-size: 0.95rem;
+        border: 1px solid #0080ff40;
+        background: #0080ff14;
+        border-radius: 50px;
+        padding: 10px 22px;
+        transition: var(--transition);
+      }
+      .contact-web:hover {
+        background: #0080ff26;
+        border-color: var(--accent);
+        transform: translateY(-2px);
+      }
+      .contact-web svg {
+        flex-shrink: 0;
+      }
+      .booking-wrapper {
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid var(--border-light);
+        box-shadow: 0 20px 60px #0006;
+        background: #fff;
+        height: 680px;
+      }
+      .booking-iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+      }
+      .booking-fallback {
+        color: #ffffff80;
+        font-size: 0.85rem;
+        margin-top: 14px;
+        text-align: center;
+      }
+      .booking-fallback a {
+        color: var(--accent-light);
+        text-decoration: underline;
+        transition: var(--transition);
+      }
+      .booking-fallback a:hover {
+        color: var(--text-white);
+      }
+      @media (max-width: 900px) {
+        .contact-wrapper {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .booking-wrapper {
+          height: 580px;
+        }
+      }
+      @media (max-width: 480px) {
+        .booking-wrapper {
+          height: 500px;
+        }
+      }
+
       /* ===== FOOTER ===== */
       .footer {
         background: var(--bg-dark);
@@ -970,7 +1099,7 @@
           <p class="hero-subtitle">
             Escaneo completo de la carga del buque mediante drones autónomos que
             generan un modelo 3D con nuestra tecnología innovadora 3Drone.
-            Rastreamos cada contenedor para detectar daños.
+            Rastreamos cada contenedor para detectar daño.
           </p>
           <div class="hero-actions">
             <a href="#services" class="btn btn-primary"
@@ -1172,7 +1301,7 @@
               </div>
               <iframe
                 src="https://arnaucarolcodegenia.github.io/NICA-WebViewer/"
-                title="NICA 3D WebViewer"
+                title="3Drone WebViewer"
                 class="viewer-iframe"
                 allowfullscreen=""
                 loading="lazy"
@@ -1264,6 +1393,89 @@
       </section>
     </main>
 
+    <!-- ===== CONTACT SECTION ===== -->
+    <section class="contact section-padding" id="contact">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-label">Contacto</span>
+          <h2 class="section-title section-title--light">
+            Reserva una reunión con nosotros
+          </h2>
+          <p class="section-subtitle section-subtitle--light">
+            Estamos aquí para ayudarte. Selecciona un hueco en el calendario y
+            nos pondremos en contacto contigo.
+          </p>
+        </div>
+        <div class="contact-wrapper contact-wrapper--centered">
+          <div class="contact-info">
+            <a
+              href="https://codegenia.com"
+              class="contact-logo-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img src="./logo.png" alt="Codegenia" class="contact-logo" />
+            </a>
+            <h3 class="contact-title">Hablemos sobre tu proyecto</h3>
+            <p class="contact-desc">
+              En Codegenia desarrollamos soluciones de inteligencia artificial y
+              automatización a medida. Cuéntanos tus necesidades y encontraremos
+              la mejor forma de ayudarte.
+            </p>
+            <div class="contact-actions">
+              <a
+                href="https://outlook.office.com/book/Codegenia1@darecode.com/?ismsaljsauthenabled"
+                class="btn btn-primary"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                  <line x1="16" y1="2" x2="16" y2="6" />
+                  <line x1="8" y1="2" x2="8" y2="6" />
+                  <line x1="3" y1="10" x2="21" y2="10" />
+                </svg>
+                Reservar reunión
+              </a>
+              <a
+                href="https://codegenia.com"
+                class="contact-web"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path
+                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+                  />
+                </svg>
+                codegenia.com
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <footer class="footer">
       <div class="container">
         <div class="footer-content">
@@ -1293,4 +1505,3 @@
     </script>
   </body>
 </html>
-
